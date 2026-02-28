@@ -17,13 +17,23 @@ Classify iris flowers into 3 different species based on 4 features:
 - Petal length
 - Petal width
 
+### Iris Species to Classify
+
+The three iris flower species (gattungen) to distinguish are:
+
+1. **Iris setosa** - Setosa iris (small petals, short flowers)
+2. **Iris versicolor** - Versicolor iris (medium-sized flowers)
+3. **Iris virginica** - Virginia iris (large petals, tall flowers)
+
+The model learns to differentiate these species based on the 4 morphological features.
+
 ## Project Structure
 
 ```
 PythonPortfolio/
 ├── launcher.py                 # Main interactive console application
 ├── script.py                   # Legacy standalone script example
-├── oop/
+├── ml/                         # Machine learning module
 │   ├── dataset.py              # Data loading and splitting
 │   ├── trainer.py              # Training orchestration
 │   ├── kernel.py               # Kernel base class
@@ -40,7 +50,7 @@ PythonPortfolio/
 
 ## Key Components
 
-### 1. **Dataset** (`oop/dataset.py`)
+### 1. **Dataset** (`ml/dataset.py`)
 Handles data loading and preprocessing:
 - Loads the Iris dataset from seaborn
 - Splits data into training and test sets
@@ -53,32 +63,46 @@ x_train, y_train = ds.get_train_data()
 x_test, y_test = ds.get_test_data()
 ```
 
-### 2. **Models** (`oop/models/`)
+### 2. **Models** (`ml/models/`)
 - **Model**: Abstract base class defining the interface
 - **SVMModel**: Concrete implementation using scikit-learn's SVC
-- **ModelFactory**: Factory pattern for creating different SVM variants
+- **ModelFactory**: Factory pattern for creating different model variants
 
-Supported models:
-- `svm_linear` - Linear kernel
-- `svm_rbf` - Radial Basis Function kernel (default)
-- `svm_poly` - Polynomial kernel (degree=3)
-- `svm_sigmoid` - Sigmoid kernel
+#### Currently Implemented Models
 
-### 3. **Metrics** (`oop/metrics/`)
+**Support Vector Machine (SVM) Variants:**
+- `svm_linear` - Linear kernel (best for linearly separable data)
+- `svm_rbf` - Radial Basis Function kernel (default, handles non-linear patterns)
+- `svm_poly` - Polynomial kernel with degree=3 (captures polynomial relationships)
+- `svm_sigmoid` - Sigmoid kernel (similar to neural network activation)
+
+#### Planned Models (Future Implementation)
+
+- **Decision Tree** - Tree-based classifier with feature importance
+- **Random Forest** - Ensemble of decision trees for robust predictions
+- **K-Nearest Neighbors (KNN)** - Instance-based learning algorithm
+- **Naive Bayes** - Probabilistic classifier based on Bayes' theorem
+- **Logistic Regression** - Linear model for binary/multiclass classification
+- **Neural Network / MLP** - Multi-layer perceptron for deep learning
+- **Gradient Boosting** - XGBoost/LightGBM for state-of-the-art performance
+
+All models follow the same `Model` interface for seamless integration with the pipeline.
+
+### 3. **Metrics** (`ml/metrics/`)
 - **Metric**: Abstract base class for all metrics
 - **Accuracy**: Calculates classification accuracy
 - **ConfusionMatrix**: Generates detailed confusion matrix with statistics
 
 Extensible design allows easy addition of new metrics.
 
-### 4. **Trainer** (`oop/trainer.py`)
+### 4. **Trainer** (`ml/trainer.py`)
 Orchestrates the training and evaluation pipeline:
 - Accepts model, dataset, and metrics
 - Trains the model on training data
 - Evaluates on test data using all defined metrics
 - Uses polymorphism to calculate metrics
 
-### 5. **Kernel** (`oop/kernel.py`)
+### 5. **Kernel** (`ml/kernel.py`)
 Base class for kernel implementations (foundation for future extensibility).
 
 ## Usage
@@ -224,7 +248,16 @@ Detailed breakdown per class:
 
 ## Future Enhancements
 
-- [ ] Additional classification models (Decision Trees, Random Forests, Neural Networks)
+### Planned Model Implementations
+- [ ] **Decision Tree Classifier** - Tree-based classification with feature importance
+- [ ] **Random Forest** - Ensemble learning combining multiple decision trees
+- [ ] **K-Nearest Neighbors (KNN)** - Instance-based learning with distance metrics
+- [ ] **Naive Bayes** - Probabilistic classifier based on Bayes' theorem
+- [ ] **Logistic Regression** - Linear model for multiclass classification
+- [ ] **Neural Network (MLP)** - Multi-layer perceptron for deep learning
+- [ ] **Gradient Boosting (XGBoost/LightGBM)** - State-of-the-art ensemble methods
+
+### Infrastructure & Features
 - [ ] Separate kernel classes with base class (see TODO in model_factory.py)
 - [ ] Cross-validation support
 - [ ] Hyperparameter tuning (GridSearchCV, RandomizedSearchCV)
@@ -232,6 +265,7 @@ Detailed breakdown per class:
 - [ ] Visualization of decision boundaries
 - [ ] Feature importance analysis
 - [ ] Support for multiple datasets
+- [ ] Benchmarking suite for model comparison
 
 ## Code Quality Features
 

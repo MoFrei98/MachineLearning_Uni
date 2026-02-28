@@ -96,7 +96,7 @@ def main():
         train(model, ds, metrics, epochs)
 
         # Ask user if they want to run another training session
-        response = input("\n\nDo you want to run another training? (default: yes): ").strip().lower()
+        response = input("\n\nDo you want to run another training? (yes/no default: yes): ").strip().lower()
         repeat = response not in ['no', 'n']
 
 
