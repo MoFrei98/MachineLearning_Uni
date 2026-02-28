@@ -122,51 +122,6 @@ The program will guide you through:
 4. **Evaluation**: View accuracy and confusion matrix
 5. **Loop Control**: Run multiple training sessions without restarting
 
-**Example Session:**
-```
---- Starting Machine Learning Pipeline ---
-
---- Available Models ---
-1. svm_linear
-2. svm_rbf
-3. svm_poly
-4. svm_sigmoid
-
-Select a model (1-4): 2
-Enter test size (0.0-1.0, default: 0.3): 0.3
-Enter number of epochs (default: 1): 1
-Enter random state for reproducibility (default: 42): 42
-
-✓ Configuration:
-  Model: svm_rbf
-  Test size: 0.3
-  Epochs: 1
-  Random state: 42
-
-1. Loading data...
-✓ Data loaded successfully.
-
-2. Creating model...
-✓ Model 'svm_rbf' created.
-
-3. Initializing metrics...
-✓ 2 metrics initialized.
-
-4. Initializing trainer...
-5. Executing training...
-Training completed.
-
-6. Performing evaluation...
-
---- Evaluation Results ---
-
-Accuracy:
-0.9333...
-
-Confusion Matrix:
-...
-```
-
 ### Legacy Script Mode
 
 For reference, `script.py` demonstrates a standalone implementation without OOP architecture:
