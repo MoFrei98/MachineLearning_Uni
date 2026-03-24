@@ -32,6 +32,6 @@ class Dataset:
 
     def split_data(self, x, y):
         # splits data into training and testing sets
-        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
+        self._x_train, self._x_test, self._y_train, self._y_test = train_test_split(
             x, y, test_size=self.test_size, random_state=self.random_state
         )
