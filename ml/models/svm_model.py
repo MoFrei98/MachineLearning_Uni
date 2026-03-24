@@ -1,5 +1,6 @@
 from sklearn.svm import SVC
 from ml.models.model import Model
+from ml.kernel.kernel import Kernel
 
 class SVMModel(Model):
     def __init__(self, input_shape, output_shape):
@@ -7,8 +8,24 @@ class SVMModel(Model):
         self.model = None
         self.is_trained = False
 
-    def build(self, kernel='rbf', **params):
-        self.model = SVC(kernel=kernel, **params)
+    def build(self, kernel=None, **params):
+        """
+        Build SVM model with kernel support.
+        
+        Args:
+            kernel: Either a Kernel object or a string ('rbf' default)
+            **params: Additional parameters to pass to SVC
+        """
+        if kernel is None or isinstance(kernel, str):
+            # Fallback for string kernels
+            self.model = SVC(kernel=kernel or 'rbf', **params)
+        elif isinstance(kernel, Kernel):
+            # Use Kernel object and merge its params with additional params
+            kernel_params = kernel.get_params()
+            kernel_params.update(params)
+            self.model = SVC(**kernel_params)
+        else:
+            raise TypeError("kernel must be a Kernel object or a string")
 
     def fit(self, x, y):
         self.model.fit(x, y)

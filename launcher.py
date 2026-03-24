@@ -12,15 +12,24 @@ in 3 verschiedene Arten zu klassifizieren.
 
 def get_model_choice():
     """User selects a model from available options."""
-    available_models = ["svm_linear", "svm_rbf", "svm_poly", "svm_sigmoid"]
+    available_models = [
+        ("svm_linear", "SVM with a linear kernel – separates classes with a straight hyperplane."),
+        ("svm_rbf", "SVM with RBF kernel – maps data into higher dimensions for non-linear separation."),
+        ("svm_poly", "SVM with polynomial kernel – separates classes using polynomial decision boundaries."),
+        ("svm_sigmoid", "SVM with sigmoid kernel – approximates a neural network-like decision boundary."),
+        ("decision_tree", "Splits data recursively by feature thresholds to form a tree of decisions."),
+        ("knn", "Classifies a sample by majority vote of its k nearest neighbors."),
+        ("random_forest", "Ensemble of decision trees – combines predictions to reduce overfitting."),
+        ("lda", "Projects data onto a lower-dimensional space that maximizes class separability."),
+    ]
 
     print("\n--- Available Models ---")
-    for i, model_name in enumerate(available_models, 1):
-        print(f"{i}. {model_name}")
+    for i, (model_name, description) in enumerate(available_models, 1):
+        print(f"{i}. {model_name}: {description}")
 
     while True:
         try:
-            choice = int(input("\nSelect a model (1-4): "))
+            choice = int(input("\nSelect a model (1-8): "))
             if 1 <= choice <= len(available_models):
                 return available_models[choice - 1]
             else:
