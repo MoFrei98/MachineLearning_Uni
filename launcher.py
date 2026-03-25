@@ -74,7 +74,8 @@ def main():
         print("--- Starting Machine Learning Pipeline ---")
 
         # User inputs
-        model_name = get_model_choice()
+        model_choice = get_model_choice()
+        model_name, model_description = model_choice  # Unpack tuple
         test_size, epochs, random_state = get_hyperparameters()
 
         print(f"\n✓ Configuration:")
