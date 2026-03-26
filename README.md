@@ -9,9 +9,7 @@ A comprehensive machine learning project for iris flower classification using 8 
 1. [Project Overview](#project-overview)
 2. [Getting Started](#getting-started)
 3. [How to Use](#how-to-use)
-4. [Design Patterns](#design-patterns)
-5. [Available Models](#available-models)
-6. [References](#references)
+4. [References](#references)
 
 ---
 
@@ -37,8 +35,6 @@ Classify iris flowers into **3 different species** based on **4 botanical featur
 1. **Iris setosa** - Small petals, short flowers
 2. **Iris versicolor** - Medium-sized flowers
 3. **Iris virginica** - Large petals, tall flowers
-
-## 📚 Available Models
 
 ### Implemented Models
 
@@ -189,19 +185,13 @@ Expected: ~93% on Iris dataset with default parameters
 
 ### Confusion Matrix
 
-Detailed per-class breakdown:
+Example output for confusion matrix:
 
 ```
-           Predicted
-        setosa versicolor virginica
-setosa      10           0         0    <- All correct
-versicolor   0           9         1    <- 1 misclassified
-virginica    0           1         8    <- 1 misclassified
+setosa       -> Corret: 48 | Incorrect:  0
+versicolor   -> Corret: 42 | Incorrect:  2
+virginica    -> Corret: 39 | Incorrect:  4
 ```
-
-Interpretation:
-- **Diagonal**: Correct predictions
-- **Off-diagonal**: Misclassifications
 
 ---
 
