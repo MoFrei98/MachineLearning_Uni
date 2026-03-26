@@ -1,8 +1,8 @@
 from ml.kernel.kernel import Kernel
 
 class SigmoidKernel(Kernel):
-    def __init__(self, gamma: str | float = "scale"):
-        self.gamma = gamma
+    def __init__(self, gamma: str | float = "scale") -> None:
+        self.gamma: str | float = gamma
 
     @property
     def name(self) -> str:

@@ -1,8 +1,11 @@
 from ml.dataset import Dataset
 from ml.models.model_factory import ModelFactory
+from ml.models.model import Model
 from ml.trainer import Trainer
 from ml.metrics.accuracy import Accuracy
 from ml.metrics.confusion_matrix import ConfusionMatrix
+from ml.metrics.metric import Metric
+from typing import Tuple, List
 
 """
 Training goal:
@@ -10,9 +13,9 @@ Blumen (Schwertlilien) anhand von 4 Merkmalen (Länge/Breite von Kelch- und Kron
 in 3 verschiedene Arten zu klassifizieren.
 """
 
-def get_model_choice():
+def get_model_choice() -> Tuple[str, str]:
     """User selects a model from available options."""
-    available_models = [
+    available_models: List[Tuple[str, str]] = [
         ("svm_linear", "SVM with a linear kernel – separates classes with a straight hyperplane."),
         ("svm_rbf", "SVM with RBF kernel – maps data into higher dimensions for non-linear separation."),
         ("svm_poly", "SVM with polynomial kernel – separates classes using polynomial decision boundaries."),
@@ -29,7 +32,7 @@ def get_model_choice():
 
     while True:
         try:
-            choice = int(input("\nSelect a model (1-8): "))
+            choice: int = int(input("\nSelect a model (1-8): "))
             if 1 <= choice <= len(available_models):
                 return available_models[choice - 1]
             else:
@@ -37,11 +40,11 @@ def get_model_choice():
         except ValueError:
             print("Invalid input. Please enter a number.")
 
-def get_hyperparameters():
+def get_hyperparameters() -> Tuple[float, int, int]:
     """User enters hyperparameters."""
     while True:
         try:
-            test_size = float(input("\nEnter test size (0.0-1.0, default: 0.3): ") or "0.3")
+            test_size: float = float(input("\nEnter test size (0.0-1.0, default: 0.3): ") or "0.3")
             if 0.0 < test_size < 1.0:
                 break
             else:
@@ -51,7 +54,7 @@ def get_hyperparameters():
 
     while True:
         try:
-            epochs = int(input("Enter number of epochs (default: 1): ") or "1")
+            epochs: int = int(input("Enter number of epochs (default: 1): ") or "1")
             if epochs > 0:
                 break
             else:
@@ -61,20 +64,20 @@ def get_hyperparameters():
 
     while True:
         try:
-            random_state = int(input("Enter random state for reproducibility (default: 42): ") or "42")
+            random_state: int = int(input("Enter random state for reproducibility (default: 42): ") or "42")
             break
         except ValueError:
             print("Invalid input. Please enter an integer.")
 
     return test_size, epochs, random_state
 
-def main():
-    repeat = True
+def main() -> None:
+    repeat: bool = True
     while repeat:
         print("--- Starting Machine Learning Pipeline ---")
 
         # User inputs
-        model_choice = get_model_choice()
+        model_choice: Tuple[str, str] = get_model_choice()
         model_name, model_description = model_choice  # Unpack tuple
         test_size, epochs, random_state = get_hyperparameters()
 
@@ -87,34 +90,34 @@ def main():
         # 1. Prepare data
         # Using the Dataset handler with the Iris dataset
         print("\n1. Loading data...")
-        ds = Dataset(test_size=test_size, random_state=random_state)
+        ds: Dataset = Dataset(test_size=test_size, random_state=random_state)
         ds.load_data()
         print("✓ Data loaded successfully.")
 
         # 2. Get model from factory (strategy pattern)
         # You can easily switch between 'svm_linear', 'svm_rbf', etc.
         print("\n2. Creating model...")
-        model = ModelFactory.get_model(model_name, input_shape=4, output_shape=3)
+        model: Model = ModelFactory.get_model(model_name, input_shape=4, output_shape=3)
         print(f"✓ Model '{model_name}' created.")
 
         # 3. Define metrics
         # Using classes that implement the abstract base class
         print("\n3. Initializing metrics...")
-        metrics = [Accuracy(), ConfusionMatrix()]
+        metrics: List[Metric] = [Accuracy(), ConfusionMatrix()]
         print(f"✓ {len(metrics)} metrics initialized.")
 
         train(model, ds, metrics, epochs)
 
         # Ask user if they want to run another training session
-        response = input("\n\nDo you want to run another training? (yes/no default: yes): ").strip().lower()
+        response: str = input("\n\nDo you want to run another training? (yes/no default: yes): ").strip().lower()
         repeat = response not in ['no', 'n']
 
 
-def train(model, dataset, metrics, epochs):
+def train(model: Model, dataset: Dataset, metrics: List[Metric], epochs: int) -> None:
     # 4. Initialize trainer (orchestration)
     # All components come together here
     print("\n4. Initializing trainer...")
-    trainer = Trainer(model=model, dataset=dataset, metrics_list=metrics, epochs=epochs)
+    trainer: Trainer = Trainer(model=model, dataset=dataset, metrics_list=metrics, epochs=epochs)
 
     # 5. Execute training
     print("5. Executing training...")
@@ -122,7 +125,7 @@ def train(model, dataset, metrics, epochs):
 
     predict(trainer)
 
-def predict(trainer):
+def predict(trainer: Trainer) -> None:
     # 6. Evaluation
     print("\n6. Performing evaluation...")
     results = trainer.evaluate()

@@ -1,9 +1,9 @@
 from ml.kernel.kernel import Kernel
 
 class PolyKernel(Kernel):
-    def __init__(self, degree: int = 3, gamma: str | float = "scale"):
-        self.degree = degree
-        self.gamma = gamma
+    def __init__(self, degree: int = 3, gamma: str | float = "scale") -> None:
+        self.degree: int = degree
+        self.gamma: str | float = gamma
 
     @property
     def name(self) -> str:

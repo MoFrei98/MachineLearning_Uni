@@ -3,13 +3,15 @@ from ml.models.tree_model import TreeModel
 from ml.models.knn_model import KNNModel
 from ml.models.randomforest_model import RandomForestModel
 from ml.models.lda_model import LDAModel
+from ml.models.model import Model
 from ml.kernel.linear_kernel import LinearKernel
 from ml.kernel.rbf_kernel import RBFKernel
 from ml.kernel.poly_kernel import PolyKernel
 from ml.kernel.sigmoid_kernel import SigmoidKernel
+from typing import Type, Tuple, Dict, Any
 
 class ModelFactory:
-    _registry = {
+    _registry: Dict[str, Tuple[Type[Model], Dict[str, Any]]] = {
         # --- Strategy 1-4: SVM Variants with dedicated Kernel classes ---
         "svm_linear":    (SVMModel,         {"kernel": LinearKernel()}),
         "svm_rbf":       (SVMModel,         {"kernel": RBFKernel()}),
@@ -26,11 +28,11 @@ class ModelFactory:
     }
 
     @staticmethod
-    def get_model(algo_type, input_shape, output_shape):
+    def get_model(algo_type: str, input_shape: int, output_shape: int) -> Model:
         if algo_type not in ModelFactory._registry:
             raise ValueError(f"Unknown algorithm type: {algo_type}")
 
         model_class, build_params = ModelFactory._registry[algo_type]
-        model = model_class(input_shape, output_shape)
+        model: Model = model_class(input_shape, output_shape)
         model.build(**build_params)
         return model
