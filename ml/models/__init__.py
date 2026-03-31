@@ -8,6 +8,7 @@ from ml.models.tree_model import TreeModel
 from ml.models.knn_model import KNNModel
 from ml.models.randomforest_model import RandomForestModel
 from ml.models.lda_model import LDAModel
+from ml.models.gxboost_model import XGBoostModel
 
 __all__ = [
     "ModelFactory",
@@ -15,6 +16,7 @@ __all__ = [
     "TreeModel",
     "KNNModel",
     "RandomForestModel",
-    "LDAModel"
+    "LDAModel",
+    "XGBoostModel"
 ]
 

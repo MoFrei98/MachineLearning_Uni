@@ -1,5 +1,6 @@
 import seaborn as sns
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 import numpy as np
 from typing import Tuple
@@ -12,11 +13,16 @@ class Dataset:
         self._y_test: pd.Series | None = None
         self.test_size: float = test_size
         self.random_state: int = random_state
+        self.label_encoder: LabelEncoder = LabelEncoder()
 
     def load_data(self, dataset_name: str = 'iris') -> 'Dataset':
         ds: pd.DataFrame = sns.load_dataset(dataset_name)
         x: pd.DataFrame = ds.drop('species', axis=1)
         y: pd.Series = ds['species']
+
+        # Encode string labels to numeric values
+        y_encoded: np.ndarray = self.label_encoder.fit_transform(y)
+        y = pd.Series(y_encoded, index=y.index)
 
         self._x_train, self._x_test, self._y_train, self._y_test = train_test_split(
             x, y, test_size=self.test_size, random_state=self.random_state
@@ -34,7 +40,7 @@ class Dataset:
         return self._x_test, self._y_test
 
     def split_data(self, x: pd.DataFrame | np.ndarray, y: pd.Series | np.ndarray) -> None:
-        # splits data into training and testing sets
+        # ...existing code...
         self._x_train, self._x_test, self._y_train, self._y_test = train_test_split(
             x, y, test_size=self.test_size, random_state=self.random_state
         )

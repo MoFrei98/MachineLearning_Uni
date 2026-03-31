@@ -3,6 +3,7 @@ from ml.models.tree_model import TreeModel
 from ml.models.knn_model import KNNModel
 from ml.models.randomforest_model import RandomForestModel
 from ml.models.lda_model import LDAModel
+from ml.models.gxboost_model import XGBoostModel
 from ml.models.model import Model
 from ml.kernel.linear_kernel import LinearKernel
 from ml.kernel.rbf_kernel import RBFKernel
@@ -25,6 +26,8 @@ class ModelFactory:
         "random_forest": (RandomForestModel,{"n_estimators": 100}),
         # --- Strategy 8: Linear Discriminant Analysis ---
         "lda":           (LDAModel,         {}),
+        # --- Strategy 9: XGBoost ---
+        "xgboost":       (XGBoostModel,     {"n_estimators": 100, "random_state": 42}),
     }
 
     @staticmethod

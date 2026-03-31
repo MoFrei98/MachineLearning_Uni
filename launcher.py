@@ -24,6 +24,7 @@ def get_model_choice() -> Tuple[str, str]:
         ("knn", "Classifies a sample by majority vote of its k nearest neighbors."),
         ("random_forest", "Ensemble of decision trees – combines predictions to reduce overfitting."),
         ("lda", "Projects data onto a lower-dimensional space that maximizes class separability."),
+        ("xgboost", "Extreme Gradient Boosting – iteratively builds decision trees to correct previous errors with high performance."),
     ]
 
     print("\n--- Available Models ---")
@@ -32,7 +33,7 @@ def get_model_choice() -> Tuple[str, str]:
 
     while True:
         try:
-            choice: int = int(input("\nSelect a model (1-8): "))
+            choice: int = int(input("\nSelect a model (1-9): "))
             if 1 <= choice <= len(available_models):
                 return available_models[choice - 1]
             else:
